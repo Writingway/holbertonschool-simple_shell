@@ -82,8 +82,8 @@ void execute_command(char *line, char **env)
 int main(int argc, char **argv, char **envp)
 {
 	char *line;
-	char buf[1024];
-
+	(void)argc;
+	(void)argv;
 	while (1)
 	{
 		print_prompt();
