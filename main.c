@@ -1,71 +1,16 @@
 #include "main.h"
 
 /**
- * print_prompt - Prints the shell prompt
+ * display_prompt - Prints the shell prompt
+ * Description: Displays a prompt if the input is from a terminal
+ * Return: void
  */
-void print_prompt(void)
+void display_prompt(void)
 {
-	printf("$ "); /* titre de la fenêtre */
-	fflush(stdout); /* s'assurer que ça s'affiche immédiatement */
-}
-
-/**
- * read_line - Reads a line of input from stdin
- * Return: The line read from stdin
- */
-char *read_line(void)
-{
-	char *line = NULL;
-	size_t len = 0;
-	ssize_t read;
-
-	/*Cette fonction lit une ligne complète */
-	read = getline(&line, &len, stdin);
-	if (read == -1) /* Si erreur de lecture */
+	if (isatty(STDIN_FILENO))
 	{
-		free(line);
-		exit(EXIT_SUCCESS); /* on quitte proprement */
-	}
-	return (line);
-}
-
-/**
- * execute_command - Executes a command
- * @line: The command line to execute
- * @env: The environment variables
- */
-void execute_command(char *line, char **env)
-{
-	char *argv[2];
-	pid_t pid;
-	int status;
-
-	line[strcspn(line, "\n")] = 0;
-	if (line[0] == '\0')
-		return;
-
-	argv[0] = line;
-	argv[1] = NULL;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork failed");
-		return;
-	}
-
-	if (pid == 0) /* fils */
-	{
-		if (execve(argv[0], argv, env) == -1)
-		{
-			fprintf(stderr, "shell: %s: command not found\n", argv[0]);
-			/*printf("argv[0] %s argv %s env %s\n", argv[0], *argv, *env);*/
-		}
-		exit(127);
-	}
-	else /* père*/
-	{
-		waitpid(pid, &status, 0);
+		printf("$ ");	/* titre de la fenêtre */
+		fflush(stdout); /* s'assurer que ça s'affiche immédiatement */
 	}
 }
 
@@ -77,18 +22,22 @@ void execute_command(char *line, char **env)
  * @envp: Environment variables
  * Description: A simple C program that returns 0
  */
+#include "main.h"
+
 int main(int argc, char **argv, char **envp)
 {
-	char *line;
+	char *input;
+
 	(void)argc;
 	(void)argv;
+
 	while (1)
 	{
-		if (isatty(STDIN_FILENO))
-			print_prompt();
-		line = read_line();
-		execute_command(line, envp);
-		free(line);
+		display_prompt();
+		input = read_input();
+		parse_input(input);
+		execute_command(input, envp);
+		free(input);
 	}
 	return (0);
 }
