@@ -24,7 +24,6 @@ char *read_line(void)
 	if (read == -1) /* Si erreur de lecture */
 	{
 		free(line);
-		printf("\n");
 		exit(EXIT_SUCCESS); /* on quitte proprement */
 	}
 	return (line);
@@ -39,6 +38,7 @@ void execute_command(char *line, char **env)
 {
 	char *argv[2];
 	pid_t pid;
+	int status;
 
 	line[strcspn(line, "\n")] = 0;
 	if (line[0] == '\0')
@@ -61,12 +61,10 @@ void execute_command(char *line, char **env)
 			fprintf(stderr, "shell: %s: command not found\n", argv[0]);
 			/*printf("argv[0] %s argv %s env %s\n", argv[0], *argv, *env);*/
 		}
-		exit(EXIT_FAILURE);
+		exit(127);
 	}
 	else /* père*/
 	{
-		int status;
-
 		waitpid(pid, &status, 0);
 	}
 }
@@ -86,7 +84,8 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	while (1)
 	{
-		print_prompt();
+		if (isatty(STDIN_FILENO))
+			print_prompt();
 		line = read_line();
 		execute_command(line, envp);
 		free(line);
