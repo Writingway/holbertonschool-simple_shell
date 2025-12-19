@@ -15,7 +15,7 @@
 
 void display_prompt(void);
 char *read_input(void);
-void parse_input(char *line);
+char **split_line(char *line);
 void execute_command(char *line, char **env);
 
 #endif /* SHELL_H */

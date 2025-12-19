@@ -7,38 +7,31 @@
  */
 void execute_command(char *line, char **env)
 {
-	char *argv[2];
+	char **argv;
 	pid_t pid;
 	int status;
+	int i;
 
-	/* ligne vide on return au debut de la boucle */
-	if (!line || *line == '\0')
+	argv = split_line(line);
+	if (!argv || !argv[0])
 		return;
 
-	/* préparer les arguments pour execve */
-	argv[0] = line;
-	argv[1] = NULL;
-
-	/* créer un nouveau processus */
 	pid = fork();
 	if (pid == -1)
 	{
-		/* erreur lors de la création du processus */
-		perror("fork failed");
+		perror("fork");
 		return;
 	}
 
-	if (pid == 0) /* fils */
+	if (pid == 0)
 	{
-		/* exécuter la commande */
 		if (execve(argv[0], argv, env) == -1)
 		{
-			fprintf(stderr, "shell: %s: command not found\n", argv[0]);
-			/*printf("argv[0] %s argv %s env %s\n", argv[0], *argv, *env);*/
+			perror("execve");
+			exit(127);
 		}
-		exit(127);
 	}
-	else /* père*/
+	else
 	{
 		waitpid(pid, &status, 0);
 	}
