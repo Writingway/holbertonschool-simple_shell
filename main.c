@@ -35,7 +35,6 @@ int main(int argc, char **argv, char **envp)
 	{
 		display_prompt();
 		input = read_input();
-		parse_input(input);
 		execute_command(input, envp);
 		free(input);
 	}
