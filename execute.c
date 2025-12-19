@@ -13,7 +13,10 @@ void execute_command(char *line, char **env)
 
 	argv = split_line(line);
 	if (!argv || !argv[0])
+	{
+		free(argv);
 		return;
+	}
 
 	pid = fork();
 	if (pid == -1)
@@ -27,11 +30,14 @@ void execute_command(char *line, char **env)
 		if (execve(argv[0], argv, env) == -1)
 		{
 			perror("execve");
+			free(argv);
 			exit(127);
 		}
 	}
 	else
 	{
 		waitpid(pid, &status, 0);
+		free(argv);
 	}
+
 }
