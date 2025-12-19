@@ -10,6 +10,7 @@ void execute_command(char *line, char **env)
 	char **argv;
 	pid_t pid;
 	int status;
+	
 
 	argv = split_line(line);
 	if (!argv || !argv[0])
