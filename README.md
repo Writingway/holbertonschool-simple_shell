@@ -6,8 +6,6 @@
 
 Le projet permet de comprendre concrètement le fonctionnement interne d’un shell, notamment la gestion des processus, l’utilisation de `fork`, `execve`, `wait`, ainsi que la résolution des commandes via la variable d’environnement `PATH`.
 
-> ⚠️ Remarque : contrairement au projet `_printf`, ce projet **n’implémente pas la fonction `printf`**. L’affichage repose sur des fonctions système standards (`write`, etc.).
-
 ---
 
 ## Commande de compilation
