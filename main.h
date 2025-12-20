@@ -17,5 +17,7 @@ void display_prompt(void);
 char *read_input(void);
 char **split_line(char *line);
 void execute_command(char *line, char **env);
+char *get_path(char **env);
+char *find_command(char *cmd, char **env);
 
 #endif /* SHELL_H */
