@@ -13,11 +13,11 @@ char *read_input(void)
 
 	/*Cette fonction lit une ligne complète */
 	read = getline(&line, &len, stdin);
+
 	/* Si erreur de lecture EOF */
 	if (read == -1)
 	{
 		free(line);
-		printf("\n");
 		/* on quitte proprement */
 		exit(0);
 	}

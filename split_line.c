@@ -25,8 +25,10 @@ char **split_line(char *line)
 	token = strtok(line, " \t\n");
 	while (token)
 	{
-		argv[i++] = token;
+		if (strlen(token) > 0)
+			argv[i] = token;
 		token = strtok(NULL, " \t\n");
+		i++;
 	}
 	argv[i] = NULL;
 
