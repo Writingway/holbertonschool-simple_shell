@@ -19,28 +19,37 @@ void execute_command(char *line, char **env)
 		return;
 	}
 
-	if (access(argv[0], X_OK) == -1) /* Est-ce que argv[0] est une commande exécutable ? */
+	if (access(argv[0], X_OK) == -1)
 	{
-		perror(argv[0]); /* message d'erreur */
+		perror(argv[0]);
 		free(argv);
-		return; /* retour au prompt */
+		return;
 	}
 
 	cmd_path = find_command(argv[0], env);
-
+	if (!cmd_path)
+	{
+		write(2,"Command not found\n", 18);
+		free(argv);
+		return; /* pas de fork */
+	}
+	
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork");
+		free(argv);
+		free(cmd_path);
 		return;
 	}
 
 	if (pid == 0)
 	{
-		if (execve(argv[0], argv, env) == -1)
+		if (execve(cmd_path, argv, env) == -1)
 		{
 			perror("execve");
 			free(argv);
+			free(cmd_path);
 			exit(127);
 		}
 	}
@@ -48,6 +57,7 @@ void execute_command(char *line, char **env)
 	{
 		waitpid(pid, &status, 0);
 		free(argv);
+		free(cmd_path);
 	}
 
 }

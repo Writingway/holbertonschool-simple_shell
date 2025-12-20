@@ -14,6 +14,7 @@ char *get_path(char **env)
 	{
 		if (strncmp(env[i], "PATH=", 5) == 0) /* Si variable commence par PATH= */
 			return (env[i] + 5); /* retourne tout ce qui est après PATH= */
+		i++;
 	}
 	return (NULL);
  }
@@ -47,7 +48,7 @@ char *find_command(char *cmd, char **env)
 	/* parcourir les dossiers */
 	while (dir)
 	{
-		full_path = malloc(strlen(dir + strlen(cmd) + 2)); /* 1 pour / et 1 pour \O */
+		full_path = malloc(strlen(dir) + strlen(cmd) + 2); /* 1 pour / et 1 pour \O */
 		sprintf(full_path, "%s/%s", dir , cmd);
 
 		if (access(full_path, X_OK) == 0)
