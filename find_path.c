@@ -21,33 +21,25 @@ char *get_path(char **env)
 
 
 /**
- * find_path - séquencer le PATH juqu'a trouvé le bon chemin
+ * find_path - Cherche le chemin complet d'une commande
  * @cmd: commande entrée
- * @env: The environment variables
- * Return: 0
+ * @env: variables d'environnement
+ * Return: chemin complet de la commande si trouvée, NULL sinon
  */
 char *find_path(char *cmd, char **env)
 {
-	char *path_env = NULL;
+	char *path_env;
 	char *path_copy;
 	char *dir;
 	char *full_path;
 
-	/* chemin absolu*/
-	if (cmd[0] == '/' && access(cmd, X_OK) == 0) /* si le prompt est executable */
-		return (strdup(cmd)); /* retourne direct le chemin */
-	/* récuperer le PATH */
-	path_env = get_path(env);
-	if (path_env == NULL)
+	if (cmd == NULL || strlen(cmd) == 0)
 		return (NULL);
-	/* Copier le PATH */
-	path_copy = strdup(path_env); /* on travail sur une copie */
-	dir = strtok(path_copy, ":"); /* decouper sur : */
-
-	full_path = malloc(strlen(dir) + strlen(cmd) + 3); /* 1 pour / et 1 pour \O */
-	if (full_path == NULL)
+	/* Si cmd contient un '/' -> chemin relatif ou absolu */
+	if (strchr(cmd, '/') != NULL)
 	{
-		free(path_copy);
+		if (access(cmd, X_OK) == 0)
+			return (strdup(cmd));
 		return (NULL);
 	}
 	/* Récupérer PATH */
@@ -61,7 +53,7 @@ char *find_path(char *cmd, char **env)
 	while (dir)
 	{
 		/* Allouer assez de mémoire pour dir + '/' + cmd + '\0' */
-		full_path = malloc(strlen(dir) + strlen(cmd) + 2);
+		full_path = malloc(strlen(dir) + strlen(cmd) + 3);
 		if (full_path == NULL)
 		{
 			free(path_copy);
