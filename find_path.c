@@ -43,7 +43,7 @@ char *find_path(char *cmd, char **env)
 	path_copy = strdup(path_env); /* on travail sur une copie */
 	dir = strtok(path_copy, ":"); /* decouper sur : */
 
-	full_path = malloc(strlen(dir) + strlen(cmd) + 2); /* 1 pour / et 1 pour \O */
+	full_path = malloc(strlen(dir) + strlen(cmd) + 3); /* 1 pour / et 1 pour \O */
 	if (full_path == NULL)
 	{
 		free(path_copy);
