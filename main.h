@@ -13,9 +13,14 @@
 #include <errno.h>
 #include <signal.h>
 
+extern char **environ;
+
 void display_prompt(void);
 char *read_input(void);
 char **split_line(char *line);
+int count_arguments(char *line);
 void execute_command(char *line, char **env);
+
+char *_getenv(const char *name);
 
 #endif /* SHELL_H */
