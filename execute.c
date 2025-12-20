@@ -18,6 +18,13 @@ void execute_command(char *line, char **env)
 		return;
 	}
 
+	if (access(argv[0], X_OK) == -1)
+	{
+		perror(argv[0]);
+		free(argv);
+		return;
+	}
+
 	pid = fork();
 	if (pid == -1)
 	{
