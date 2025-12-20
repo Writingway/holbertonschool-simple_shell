@@ -10,6 +10,7 @@ void execute_command(char *line, char **env)
 	char **argv;
 	pid_t pid;
 	int status;
+	char *cmd_path;
 
 	argv = split_line(line);
 	if (!argv || !argv[0])
@@ -24,6 +25,8 @@ void execute_command(char *line, char **env)
 		free(argv);
 		return; /* retour au prompt */
 	}
+
+	cmd_path = find_command(argv[0], env);
 
 	pid = fork();
 	if (pid == -1)
