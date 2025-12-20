@@ -18,11 +18,11 @@ void execute_command(char *line, char **env)
 		return;
 	}
 
-	if (access(argv[0], X_OK) == -1)
+	if (access(argv[0], X_OK) == -1) /* Est-ce que argv[0] est une commande exécutable ? */
 	{
-		perror(argv[0]);
+		perror(argv[0]); /* message d'erreur */
 		free(argv);
-		return;
+		return; /* retour au prompt */
 	}
 
 	pid = fork();
