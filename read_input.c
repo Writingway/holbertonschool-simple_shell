@@ -11,8 +11,6 @@ char *read_input(void)
 	size_t len = 0;
 	ssize_t read;
 
-	printf("Reading env %s\n", environ); /* Debugging line */
-
 	/*Cette fonction lit une ligne complète */
 	read = getline(&line, &len, stdin);
 	/* Si erreur de lecture EOF */
