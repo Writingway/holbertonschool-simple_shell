@@ -20,12 +20,21 @@ void execute_command(char *line, char **env)
 		free(argv);
 		return;
 	}
+<<<<<<< HEAD
 	cmd_path = find_path(argv[0], env);
 	if (cmd_path == NULL)
 	{
 		fprintf(stderr, "%s: command not found\n", argv[0]);
 		free(argv);
 		return;
+=======
+	cmd_path = find_command(argv[0], env);
+	if (!cmd_path)
+	{
+		fprintf(stderr, "%s: command not found\n", argv[0]);
+		free(argv);
+		return; /* pas de fork */
+>>>>>>> 7c246778a6d2622781c67dfb6b87e67f5b7dff48
 	}
 	pid = fork();
 	if (pid == -1)
