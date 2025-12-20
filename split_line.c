@@ -11,9 +11,16 @@ char **split_line(char *line)
 	char *token;
 	int i = 0;
 
-	argv = malloc(sizeof(char *) * 64);
-	if (!argv)
+	/* Count the number of arguments */
+	int argc = count_arguments(line);
+
+	/* Allocate memory for argv with the exact number of arguments "argc"*/
+	argv = malloc(sizeof(char *) * (argc + 1));
+	if (argv == NULL)
+	{
+		free(argv);
 		return (NULL);
+	}
 
 	token = strtok(line, " \t\n");
 	while (token)

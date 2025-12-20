@@ -12,29 +12,23 @@ void execute_command(char *line, char **env)
 	int status;
 	char *cmd_path;
 
+	/*Split the line with split_line function */
 	argv = split_line(line);
-	if (!argv || !argv[0])
+	/*Check if argv is NULL or the first argument is NULL */
+	if (argv == NULL || argv[0] == NULL)
 	{
 		free(argv);
 		return;
 	}
-
-	if (access(argv[0], X_OK) == -1)
-	{
-		perror(argv[0]);
-		free(argv);
-		return;
-	}
-
 	cmd_path = find_command(argv[0], env);
 	if (!cmd_path)
 	{
-		write(2,"Command not found\n", 18);
+		fprintf(stderr, "%s: command not found\n", argv[0]);
 		free(argv);
 		return; /* pas de fork */
 	}
-	
 	pid = fork();
+	printf("Forked process with PID: %d & %d\n", pid, getpid());
 	if (pid == -1)
 	{
 		perror("fork");
@@ -42,7 +36,6 @@ void execute_command(char *line, char **env)
 		free(cmd_path);
 		return;
 	}
-
 	if (pid == 0)
 	{
 		if (execve(cmd_path, argv, env) == -1)
@@ -59,5 +52,4 @@ void execute_command(char *line, char **env)
 		free(argv);
 		free(cmd_path);
 	}
-
 }
