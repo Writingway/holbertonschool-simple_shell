@@ -28,7 +28,10 @@ char *get_path(char **env)
  */
 char *find_path(char *cmd, char **env)
 {
-	char *path_env, *path_copy, *dir, *full_path;
+	char *path_env;
+	char *path_copy;
+	char *dir;
+	char *full_path;
 
 	if (cmd == NULL || strlen(cmd) == 0)
 		return (NULL);
@@ -50,7 +53,7 @@ char *find_path(char *cmd, char **env)
 	while (dir)
 	{
 		/* Allouer assez de mémoire pour dir + '/' + cmd + '\0' */
-		full_path = malloc(strlen(dir) + strlen(cmd) + 2);
+		full_path = malloc(strlen(dir) + strlen(cmd) + 3);
 		if (full_path == NULL)
 		{
 			free(path_copy);
