@@ -25,7 +25,7 @@ void execute_command(char *line, char **env, char *prog_name, int line_number)
 	{
 		fprintf(stderr, "%s: %d: %s: not found\n", prog_name, line_number, argv[0]);
 		free_argv(argv);
-		return;
+		exit(127);
 	}
 	pid = fork();
 	if (pid == -1)
