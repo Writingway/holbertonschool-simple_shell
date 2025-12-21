@@ -39,6 +39,8 @@ int main(int argc, char **argv, char **envp)
 		input = read_input();
 		status = execute_command(input, envp, prog_name, ++line_number);
 		free(input);
+		if (status == 127)
+			exit(127);
 	}
 	return (status);
 }
