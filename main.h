@@ -18,7 +18,7 @@ void display_prompt(void);
 char *read_input(void);
 char **split_line(char *line);
 int count_arguments(char *line);
-void execute_command(char *line, char **env, char *prog_name, int line_number);
+int execute_command(char *line, char **env, char *prog_name, int line_number);
 char *get_path(char **env);
 char *find_path(char *cmd, char **env);
 void free_argv(char **argv);
