@@ -13,8 +13,6 @@ int execute_command(char *line, char **env, char *prog_name, int line_number)
 	char **argv, *cmd_path;
 	pid_t pid;
 	int status;
-	(void)prog_name;
-	(void)line_number;
 
 	argv = split_line(line);
 	if (argv == NULL || argv[0] == NULL)
@@ -25,6 +23,7 @@ int execute_command(char *line, char **env, char *prog_name, int line_number)
 	cmd_path = find_path(argv[0], env);
 	if (cmd_path == NULL)
 	{
+		fprintf(stderr, "%s: %d: %s: not found\n", prog_name, line_number, argv[0]);
 		free_argv(argv);
 		return (127);
 	}
