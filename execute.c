@@ -6,9 +6,9 @@
  * @env: The environment variables
  * @prog_name: The name of the program
  * @line_number: The line number of the command
- * Return: void
+ * Return: int status of the executed command
  */
-void execute_command(char *line, char **env, char *prog_name, int line_number)
+int execute_command(char *line, char **env, char *prog_name, int line_number)
 {
 	char **argv, *cmd_path;
 	pid_t pid;
@@ -18,14 +18,13 @@ void execute_command(char *line, char **env, char *prog_name, int line_number)
 	if (argv == NULL || argv[0] == NULL)
 	{
 		free_argv(argv);
-		return;
+		return (0);
 	}
 	cmd_path = find_path(argv[0], env);
 	if (cmd_path == NULL)
 	{
-		fprintf(stderr, "%s: %d: %s: not found\n", prog_name, line_number, argv[0]);
 		free_argv(argv);
-		exit(127);
+		return (127);
 	}
 	pid = fork();
 	if (pid == -1)
@@ -33,7 +32,7 @@ void execute_command(char *line, char **env, char *prog_name, int line_number)
 		perror("fork");
 		free_argv(argv);
 		free(cmd_path);
-		return;
+		return (1);
 	}
 	if (pid == 0)
 	{
@@ -45,8 +44,9 @@ void execute_command(char *line, char **env, char *prog_name, int line_number)
 			exit(127);
 		}
 	}
-	if (pid > 0)
+	else
 		waitpid(pid, &status, 0);
 	free_argv(argv);
 	free(cmd_path);
+	return (WIFEXITED(status) ? WEXITSTATUS(status) : 1);
 }

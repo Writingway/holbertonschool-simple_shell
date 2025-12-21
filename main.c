@@ -24,16 +24,13 @@ void display_prompt(void)
  * @envp: Environment variables
  * Description: A simple C program that returns 0
  */
-#include "main.h"
-
 int main(int argc, char **argv, char **envp)
 {
 	char *input;
 	char *prog_name = argv[0];
-	char line_number = 0;
+	int line_number = 0;
 
 	(void)argc;
-	(void)argv;
 
 	while (1)
 	{
