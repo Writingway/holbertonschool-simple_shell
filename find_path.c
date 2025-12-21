@@ -35,16 +35,14 @@ char *find_path(char *cmd, char **env)
 
 	if (cmd == NULL || strlen(cmd) == 0)
 		return (NULL);
-	/* Si cmd contient un '/' -> chemin relatif ou absolu */
 	if (strchr(cmd, '/') != NULL)
 	{
 		if (access(cmd, X_OK) == 0)
 			return (strdup(cmd));
 		return (NULL);
 	}
-	/* Récupérer PATH */
 	path_env = get_path(env);
-	if (path_env == NULL)
+	if (path_env == NULL || path_env[0] == '\0')
 		return (NULL);
 	path_copy = strdup(path_env);
 	if (path_copy == NULL)
@@ -57,7 +55,7 @@ char *find_path(char *cmd, char **env)
 		if (full_path == NULL)
 		{
 			free(path_copy);
-			return (NULL);
+			break;
 		}
 		sprintf(full_path, "%s/%s", dir, cmd);
 		if (access(full_path, X_OK) == 0)

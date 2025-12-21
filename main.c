@@ -29,6 +29,8 @@ void display_prompt(void)
 int main(int argc, char **argv, char **envp)
 {
 	char *input;
+	char *prog_name = argv[0];
+	char line_number = 0;
 
 	(void)argc;
 	(void)argv;
@@ -37,7 +39,7 @@ int main(int argc, char **argv, char **envp)
 	{
 		display_prompt();
 		input = read_input();
-		execute_command(input, envp);
+		execute_command(input, envp, prog_name, ++line_number);
 		free(input);
 	}
 	return (0);
