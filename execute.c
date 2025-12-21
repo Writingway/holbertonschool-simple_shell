@@ -13,6 +13,8 @@ int execute_command(char *line, char **env, char *prog_name, int line_number)
 	char **argv, *cmd_path;
 	pid_t pid;
 	int status;
+	(void)prog_name;
+	(void)line_number;
 
 	argv = split_line(line);
 	if (argv == NULL || argv[0] == NULL)
