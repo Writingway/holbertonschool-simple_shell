@@ -7,7 +7,7 @@
  */
 void buildtin_exit(char **argv)
 {
-	int exit_status = 0;
+	int exit_status = 127;
 
 	if (strcmp(argv[0], "exit") != 0)
 		return;
