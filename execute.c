@@ -4,15 +4,16 @@
  * buildtin_exit - exit shell if user types "exit"
  * @argv: arguments vector
  * @line: input line
+ * @last_status: status of last executed command
  * Return: void
  */
-void buildtin_exit(char **argv, char *line)
+void buildtin_exit(char **argv, char *line, int last_status)
 {
 	if (strcmp(argv[0], "exit") == 0)
 	{
 		free_argv(argv);
 		free(line);
-		exit(0);
+		exit(last_status);
 	}
 }
 
@@ -22,9 +23,11 @@ void buildtin_exit(char **argv, char *line)
  * @env: The environment variables
  * @prog_name: The name of the program
  * @line_number: The line number of the command
+ * @last_status: The status of the last executed command
  * Return: int status of the executed command
  */
-int execute_command(char *line, char **env, char *prog_name, int line_number)
+int execute_command(char *line, char **env, char *prog_name,
+	int line_number, int last_status)
 {
 	char **argv = split_line(line);
 	char *cmd_path;
@@ -34,7 +37,7 @@ int execute_command(char *line, char **env, char *prog_name, int line_number)
 	if (!argv || !argv[0])
 		return (free_argv(argv), 0);
 	/* buildtin exit avant de fork */
-	buildtin_exit(argv, line);
+	buildtin_exit(argv, line, last_status);
 
 	cmd_path = find_path(argv[0], env);
 	if (!cmd_path)
