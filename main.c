@@ -30,6 +30,7 @@ int main(int argc, char **argv, char **envp)
 	char *prog_name = argv[0];
 	int line_number = 0;
 	int status;
+	int interactive = isatty(STDIN_FILENO);
 
 	(void)argc;
 
@@ -39,7 +40,7 @@ int main(int argc, char **argv, char **envp)
 		input = read_input();
 		status = execute_command(input, envp, prog_name, ++line_number);
 		free(input);
-		if (status == 127)
+		if (!interactive && status == 127)
 			exit(127);
 	}
 	return (status);

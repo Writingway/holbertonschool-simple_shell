@@ -1,5 +1,22 @@
 #include "main.h"
 
+
+/**
+ * buildtin_exit - exit shell if user types "exit"
+ * @argv: arguments vector
+ * Return: 
+ */
+void buildtin_exit(char **argv)
+{
+	int exit_status = 0;
+
+	if (strcmp(argv[0], "exit") == 0)	
+	{
+		free_argv(argv);
+		exit(exit_status);
+	}
+}
+
 /**
  * execute_command - Executes a command
  * @line: The command line to execute
@@ -17,6 +34,8 @@ int execute_command(char *line, char **env, char *prog_name, int line_number)
 
 	if (!argv || !argv[0])
 		return (free_argv(argv), 0);
+	/* buildtin exit avant de fork */
+	buildtin_exit(argv);
 
 	cmd_path = find_path(argv[0], env);
 	if (!cmd_path)
