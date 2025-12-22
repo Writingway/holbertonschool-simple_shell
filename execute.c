@@ -1,5 +1,6 @@
 #include "main.h"
 
+
 /**
  * buildtin_exit - exit shell if user types "exit"
  * @argv: arguments vector
@@ -7,17 +8,13 @@
  */
 void buildtin_exit(char **argv)
 {
-	int exit_status = 127;
+	int exit_status = 0;
 
-	if (strcmp(argv[0], "exit") != 0)
-		return;
-
-	if (argv[1])
-		exit_status = atoi(argv[1]);
-
-	free_argv(argv);
-	exit(exit_status);
-
+	if (strcmp(argv[0], "exit") == 0)	
+	{
+		free_argv(argv);
+		exit(exit_status);
+	}
 }
 
 /**
