@@ -10,7 +10,7 @@ int buildtin_env(char **argv, char **env)
 {
 	int i = 0;
 
-	if (!argv || argv[0])
+	if (!argv || !argv[0])
 		return (0);
 
 	if (strcmp(argv[0], "env") != 0)
@@ -22,7 +22,6 @@ int buildtin_env(char **argv, char **env)
 		i++;
 	}
 
-	free_argv(argv);
 	return (1); /* execute env */
 }
 
@@ -64,7 +63,11 @@ int execute_command(char *line, char **env, char *prog_name,
 		return (free_argv(argv), 0);
 	/* buildtin exit avant de fork */
 	buildtin_exit(argv, line, last_status);
-	buildtin_env(argv, env);
+	if (buildtin_env(argv, env))
+	{
+		free_argv(argv);
+		return (0);
+	}
 
 	cmd_path = find_path(argv[0], env);
 	if (!cmd_path)
