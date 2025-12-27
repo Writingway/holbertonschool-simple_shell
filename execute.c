@@ -1,24 +1,29 @@
 #include "main.h"
 
 /**
- * buildtin_env - print env
- * @argv: arguments 
- * @env: 
- * Return: 
+ * buildtin_env - print the current env
+ * @argv: arguments command
+ * @env: environment variables
+ * Return: 1 if succes
  */
 int buildtin_env(char **argv, char **env)
 {
-	int i = 0 ;
+	int i = 0;
+
+	if (!argv || argv[0])
+		return (0);
 
 	if (strcmp(argv[0], "env") != 0)
 		return (0); /*pas d'env */
+
 	while (env && env[i])
 	{
 		printf("%s\n", env[i]);
 		i++;
 	}
+
 	free_argv(argv);
-	return (-1); /* execute env */
+	return (1); /* execute env */
 }
 
 /**
