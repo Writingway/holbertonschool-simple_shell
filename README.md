@@ -110,7 +110,7 @@ Le fonctionnement global du shell suit les étapes suivantes :
 8. Retour au prompt
 
 (Un flowchart visuel peut être ajouté dans le dossier `assets/`.)
-<img width="10418" height="8023" alt="image" src="https://github.com/user-attachments/assets/8cff12e3-4dbc-4e2d-8ef0-ed40a7231898" />
+<img width="10418" height="8023" alt="image" src="https://github.com/user-attachments/assets/3c2de8a3-3d11-414a-a6bf-4b2aacfe238c" />
 
 
 ---
