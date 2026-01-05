@@ -38,10 +38,9 @@ int main(int argc, char **argv, char **envp)
 	{
 		display_prompt();
 		input = read_input();
-		status = execute_command(input, envp, prog_name, ++line_number, status);
+		status = execute_command(input, envp, prog_name, ++line_number,
+			status, interactive);
 		free(input);
-		if (!interactive && status == 127)
-			exit(127);
 	}
-	return (status);
+	return (0);
 }

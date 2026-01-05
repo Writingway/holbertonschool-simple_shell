@@ -19,7 +19,7 @@ char *read_input(void);
 char **split_line(char *line);
 int count_arguments(char *line);
 int execute_command(char *line, char **env, char *prog_name,
-	int line_number, int last_status);
+	int line_number, int last_status, int interactive);
 void buildtin_exit(char **argv, char *line, int last_status);
 int buildtin_env(char **argv, char **env);
 char *get_path(char **env);
