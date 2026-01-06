@@ -51,7 +51,7 @@ int main(int argc, char **argv, char **envp)
 		{
 			free_argv(tokens);
 			printf("status: %d\n", status);
-			exit(2);
+			exit(status);
 		}
 		if (builtin_result == 1)
 		{

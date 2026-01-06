@@ -61,11 +61,13 @@ int execute_command(char **argv, char **env, char *prog_name, int line_number)
 		execve(cmd_path, argv, env), perror("execve"), exit(127);
 	else if (pid < 0)
 		return (perror("fork"), 1);
-
 	waitpid(pid, &status, 0);
+
+	status = status >> 8;
 
 	if (!strchr(argv[0], '/')) /* free seulement si find_path a malloc */
 		free(cmd_path);
 
+	printf("status: %d\n", status);
 	return (status);
 }
