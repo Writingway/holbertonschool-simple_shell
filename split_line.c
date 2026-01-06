@@ -1,11 +1,10 @@
 #include "main.h"
 
-
 /**
  * free_argv - Free the memory allocated for argv
  * @argv: The argument vector to free
  * Return: void
-*/
+ */
 void free_argv(char **argv)
 {
 	int i = 0;
@@ -20,7 +19,6 @@ void free_argv(char **argv)
 	free(argv);
 }
 
-
 /**
  * split_line - Parse the input line to remove extra spaces and newlines
  * @line: The input line to parse
@@ -28,30 +26,44 @@ void free_argv(char **argv)
  */
 char **split_line(char *line)
 {
-	char **argv;
+	char **tokens;
 	char *token;
-	int i = 0;
+	int count = 0, i = 0;
+	char *line_copy;
 
-	/* Count the number of arguments */
-	int argc = count_arguments(line);
-
-	/* Allocate memory for argv with the exact number of arguments "argc"*/
-	argv = malloc(sizeof(char *) * (argc + 1));
-	if (argv == NULL)
+	if (!line)
 		return (NULL);
-
+	/* On fait une copie de la ligne pour ne pas perdre le texte original */
+	line_copy = strdup(line);
+	if (!line_copy)
+		return (NULL);
+	/* compter le nombre de tokens */
+	token = strtok(line_copy, " \t\n");
+	while (token)
+	{
+		count++;
+		token = strtok(NULL, " \t\n");
+	}
+	free(line_copy);
+	if (count == 0)
+		return (NULL);
+	/* allocation du tableau de tokens */
+	tokens = malloc(sizeof(char *) * (count + 1));
+	if (!tokens)
+		return (NULL);
+	i = 0;
 	token = strtok(line, " \t\n");
 	while (token)
 	{
-		if (strlen(token) > 0)
+		tokens[i] = strdup(token);
+		if (!tokens[i])
 		{
-			argv[i] = strdup(token);
-			i++;
+			free_argv(tokens);
+			return (NULL);
 		}
+		i++;
 		token = strtok(NULL, " \t\n");
 	}
-	argv[i] = NULL;
-
-	return (argv);
+	tokens[i] = NULL;
+	return (tokens);
 }
-
