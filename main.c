@@ -60,6 +60,6 @@ int main(int argc, char **argv, char **envp)
 		status = execute_command(tokens, envp, argv[0], ++line_number);
 		free_argv(tokens);
 	}
-	return (status);
+	return (0);
 }
 
