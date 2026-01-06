@@ -67,7 +67,5 @@ int execute_command(char **argv, char **env, char *prog_name, int line_number)
 
 	if (!strchr(argv[0], '/')) /* free seulement si find_path a malloc */
 		free(cmd_path);
-
-	printf("status: %d\n", status);
 	return (status);
 }

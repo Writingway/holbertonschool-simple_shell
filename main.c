@@ -50,7 +50,6 @@ int main(int argc, char **argv, char **envp)
 		if (builtin_result == -1)
 		{
 			free_argv(tokens);
-			printf("status: %d\n", status);
 			exit(status);
 		}
 		if (builtin_result == 1)
