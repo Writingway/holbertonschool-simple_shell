@@ -9,17 +9,11 @@ char *read_input(void)
 {
 	char *line = NULL;
 	size_t len = 0;
-	ssize_t read;
 
-	/*Cette fonction lit une ligne complète */
-	read = getline(&line, &len, stdin);
-
-	/* Si erreur de lecture EOF */
-	if (read == -1)
+	if (getline(&line, &len, stdin) == -1)
 	{
 		free(line);
-		/* on quitte proprement */
-		exit(0);
+		return (NULL);
 	}
 	return (line);
 }
