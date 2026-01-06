@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * free_argv - Free the memory allocated for argv
+ * free_argv - Free the memory allocated for argv array
  * @argv: The argument vector to free
  * Return: void
  */
@@ -33,11 +33,11 @@ char **split_line(char *line)
 
 	if (!line)
 		return (NULL);
-	/* On fait une copie de la ligne pour ne pas perdre le texte original */
+	/* We make a copy of the line to not lose the original text */
 	line_copy = strdup(line);
 	if (!line_copy)
 		return (NULL);
-	/* compter le nombre de tokens */
+	/* count the number of tokens */
 	token = strtok(line_copy, " \t\n");
 	while (token)
 	{
@@ -47,7 +47,7 @@ char **split_line(char *line)
 	free(line_copy);
 	if (count == 0)
 		return (NULL);
-	/* allocation du tableau de tokens */
+	/* allocation of the tokens array */
 	tokens = malloc(sizeof(char *) * (count + 1));
 	if (!tokens)
 		return (NULL);

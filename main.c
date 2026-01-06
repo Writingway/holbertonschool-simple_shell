@@ -7,10 +7,27 @@
  */
 void display_prompt(void)
 {
-	/* titre de la fenêtre */
 	printf("$ ");
-	/* s'assurer que ça s'affiche immédiatement */
+	/* apply flush to ensure prompt is displayed immediately */
 	fflush(stdout);
+}
+
+/**
+ * read_input - Lire une ligne depuis l'entrée standard
+ *
+ * Return: La ligne lue
+ */
+char *read_input(void)
+{
+	char *line = NULL;
+	size_t len = 0;
+
+	if (getline(&line, &len, stdin) == -1)
+	{
+		free(line);
+		return (NULL);
+	}
+	return (line);
 }
 
 /**
