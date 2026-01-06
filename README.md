@@ -33,9 +33,10 @@ Usage The shell works in two modes: Interactive and Non-Interactive.
 
 The shell supports the following built-in commands that are executed directly by the shell process:
 
-|Command|Description|
-|exit|Exit the shell|
-|env|Print the current environment|
+| Command | Description |
+| --- | --- |
+| **exit** | Exit the shell |
+| **env** | Print the current environment |
 
 ---
 
