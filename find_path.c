@@ -20,7 +20,6 @@ char *find_path(char *cmd, char **env)
 			return (strdup(cmd));
 		return (NULL);
 	}
-	/* Cherche PATH */
 	for (i = 0; env[i]; i++)
 	{
 		if (strncmp(env[i], "PATH=", 5) == 0)

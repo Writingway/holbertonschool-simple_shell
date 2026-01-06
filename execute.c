@@ -40,32 +40,42 @@ int execute_command(char **argv, char **env, char *prog_name, int line_number)
 {
 	pid_t pid;
 	int status;
-	char *cmd_path;
+	char *cmd_path = NULL;
 
-	cmd_path = find_path(argv[0], env);
-	if (!cmd_path)
+	if (!argv || !argv[0])
+		return (0);
+
+	if (strchr(argv[0], '/')) /* chemin absolu ou relatif */
 	{
-		fprintf(stderr, "%s: %d: %s: not found\n", prog_name, line_number, argv[0]);
-		return (127);
-	}
-	pid = fork();
-	if (pid == 0)
-	{
-		if (execve(cmd_path, argv, env) == -1)
+		if (access(argv[0], X_OK) != 0)
 		{
-			perror("execve");
-			free(cmd_path);
-			exit(127);
+			fprintf(stderr, "%s: %d: %s: Permission denied\n",
+					prog_name, line_number, argv[0]);
+			return (126);
+		}
+		cmd_path = argv[0];
+	}
+	else /* chercher dans PATH */
+	{
+		cmd_path = find_path(argv[0], env);
+		if (!cmd_path)
+		{
+			fprintf(stderr, "%s: %d: %s: not found\n",
+					prog_name, line_number, argv[0]);
+			return (127);
 		}
 	}
-	else if (pid > 0)
-		waitpid(pid, &status, 0);
-	else
-	{
-		perror("fork");
+
+	pid = fork();
+	if (pid == 0) /* child */
+		execve(cmd_path, argv, env), perror("execve"), exit(127);
+	else if (pid < 0)
+		return (perror("fork"), 1);
+
+	waitpid(pid, &status, 0);
+
+	if (!strchr(argv[0], '/')) /* free seulement si find_path a malloc */
 		free(cmd_path);
-		return (1);
-	}
-	free(cmd_path);
+
 	return (status);
 }
