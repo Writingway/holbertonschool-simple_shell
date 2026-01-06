@@ -1,10 +1,10 @@
 #include "main.h"
 
 /**
- * find_path - Cherche le chemin complet d'une commande
- * @cmd: commande entrée
- * @env: variables d'environnement
- * Return: chemin complet de la commande si trouvée, NULL sinon
+ * find_path - Find the full path of a command in the PATH environment variable
+ * @cmd: the command to find
+ * @env: environment variables
+ * Return: full path of the command if found, NULL otherwise
  */
 char *find_path(char *cmd, char **env)
 {
