@@ -48,7 +48,6 @@ int execute_command(char **argv, char **env, char *prog_name, int line_number)
 		fprintf(stderr, "%s: %d: %s: not found\n", prog_name, line_number, argv[0]);
 		return (127);
 	}
-
 	pid = fork();
 	if (pid == 0)
 	{
@@ -67,7 +66,6 @@ int execute_command(char **argv, char **env, char *prog_name, int line_number)
 		free(cmd_path);
 		return (1);
 	}
-
 	free(cmd_path);
 	return (status);
 }

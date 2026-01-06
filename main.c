@@ -29,7 +29,6 @@ int main(int argc, char **argv, char **envp)
 	int interactive = isatty(STDIN_FILENO);
 	int line_number = 0;
 	int builtin_result;
-
 	(void)argc;
 	(void)argv;
 
@@ -37,27 +36,22 @@ int main(int argc, char **argv, char **envp)
 	{
 		if (interactive)
 			display_prompt();
-
 		line = read_input();
 		if (!line)
 			break;
-
 		tokens = split_line(line);
 		free(line);
-
 		if (!tokens || !tokens[0])
 		{
 			free_argv(tokens);
 			continue;
 		}
 		builtin_result = handle_builtins(tokens, envp);
-
 		if (builtin_result == -1)
 		{
 			free_argv(tokens);
 			exit(status);
 		}
-
 		if (builtin_result == 1)
 		{
 			free_argv(tokens);
@@ -66,7 +60,6 @@ int main(int argc, char **argv, char **envp)
 		status = execute_command(tokens, envp, argv[0], ++line_number);
 		free_argv(tokens);
 	}
-
 	return (status);
 }
 

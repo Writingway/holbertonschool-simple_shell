@@ -19,7 +19,6 @@ char *find_path(char *cmd, char **env)
 			return (strdup(cmd));
 		return (NULL);
 	}
-
 	/* Cherche PATH */
 	for (int i = 0; env[i]; i++)
 	{
@@ -29,13 +28,9 @@ char *find_path(char *cmd, char **env)
 			break;
 		}
 	}
-	if (!path_env)
-		return (NULL);
-
 	copy = strdup(path_env);
-	if (!copy)
+	if (!path_env || !copy)
 		return (NULL);
-
 	dir = strtok(copy, ":");
 	while (dir)
 	{
@@ -46,12 +41,11 @@ char *find_path(char *cmd, char **env)
 		if (access(full, X_OK) == 0)
 		{
 			free(copy);
-			return full;
+			return (full);
 		}
 		free(full);
 		dir = strtok(NULL, ":");
 	}
-
 	free(copy);
 	return (NULL);
 }
