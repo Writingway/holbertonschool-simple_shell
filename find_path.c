@@ -12,6 +12,7 @@ char *find_path(char *cmd, char **env)
 	char *copy = NULL;
 	char *dir = NULL;
 	char *full = NULL;
+	int i = 0;
 
 	if (!cmd || strchr(cmd, '/'))
 	{
@@ -20,7 +21,7 @@ char *find_path(char *cmd, char **env)
 		return (NULL);
 	}
 	/* Cherche PATH */
-	for (int i = 0; env[i]; i++)
+	for (i = 0; env[i]; i++)
 	{
 		if (strncmp(env[i], "PATH=", 5) == 0)
 		{
