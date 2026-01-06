@@ -8,28 +8,24 @@
  */
 char *find_path(char *cmd, char **env)
 {
-	char *path_env = NULL;
-	char *copy = NULL;
-	char *dir = NULL;
-	char *full = NULL;
-	int i = 0;
+	char *path_env = NULL, *copy, *dir, *full;
+	int i;
 
-	if (!cmd || strchr(cmd, '/'))
-	{
-		if (access(cmd, X_OK) == 0)
-			return (strdup(cmd));
+	if (!cmd)
 		return (NULL);
-	}
+	if (strchr(cmd, '/')) /* chemin absolu ou relatif */
+		return (access(cmd, X_OK) == 0 ? strdup(cmd) : NULL);
+	/* Cherche PATH dans l'env */
 	for (i = 0; env[i]; i++)
-	{
 		if (strncmp(env[i], "PATH=", 5) == 0)
 		{
 			path_env = env[i] + 5;
 			break;
 		}
-	}
+	if (!path_env)
+		return (NULL);
 	copy = strdup(path_env);
-	if (!path_env || !copy)
+	if (!copy)
 		return (NULL);
 	dir = strtok(copy, ":");
 	while (dir)
