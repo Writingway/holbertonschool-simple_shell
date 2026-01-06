@@ -46,26 +46,16 @@ int execute_command(char **argv, char **env, char *prog_name, int line_number)
 		return (0);
 
 	if (strchr(argv[0], '/')) /* chemin absolu ou relatif */
-	{
-		if (access(argv[0], X_OK) != 0)
-		{
-			fprintf(stderr, "%s: %d: %s: Permission denied\n",
-					prog_name, line_number, argv[0]);
-			return (126);
-		}
 		cmd_path = argv[0];
-	}
 	else /* chercher dans PATH */
 	{
 		cmd_path = find_path(argv[0], env);
 		if (!cmd_path)
 		{
-			fprintf(stderr, "%s: %d: %s: not found\n",
-					prog_name, line_number, argv[0]);
+			fprintf(stderr, "%s: %d: %s: not found\n", prog_name, line_number, argv[0]);
 			return (127);
 		}
 	}
-
 	pid = fork();
 	if (pid == 0) /* child */
 		execve(cmd_path, argv, env), perror("execve"), exit(127);
