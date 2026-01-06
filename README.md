@@ -4,19 +4,18 @@
 
 ## Summary
 
-[Description](#Description)
-[Compilation](#Compilation_command)
-[Built-in-Commands](#Built-in-Commands)
-[Compilation_command](#Compilation_command)
-[Requirements](#Requirements)
-[Examples_of_use](#Examples_of_use)
-[Man_Page](#Man_Page)
-[Testing](#Testing)
-[Flowchart](#Flowchart)
-[Other](#Other)
-[Technologies_Used](#Technologies_Used)
-[Authors](#Authors)
-
+- [Description](#Description)
+- [Compilation](#Compilation_command)
+- [Built-in-Commands](#Built-in-Commands)
+- [Compilation_command](#Compilation_command)
+- [Requirements](#Requirements)
+- [Examples_of_use](#Examples_of_use)
+- [Man_Page](#Man_Page)
+- [Testing](#Testing)
+- [Flowchart](#Flowchart)
+- [Other](#Other)
+- [Technologies_Used](#Technologies_Used)
+- [Authors](#Authors)
 
 ---
 
