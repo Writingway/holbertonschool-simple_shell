@@ -7,13 +7,10 @@
  */
 void display_prompt(void)
 {
-	if (isatty(STDIN_FILENO))
-	{
-		/* titre de la fenêtre */
-		printf("$ ");
-		/* s'assurer que ça s'affiche immédiatement */
-		fflush(stdout);
-	}
+	/* titre de la fenêtre */
+	printf("$ ");
+	/* s'assurer que ça s'affiche immédiatement */
+	fflush(stdout);
 }
 
 /**
@@ -23,25 +20,53 @@ void display_prompt(void)
  * @argv: Argument vector
  * @envp: Environment variables
  * Description: A simple C program that returns 0
- */
+*/
 int main(int argc, char **argv, char **envp)
 {
-	char *input;
-	char *prog_name = argv[0];
-	int line_number = 0;
+	char *line;
+	char **tokens;
 	int status = 0;
 	int interactive = isatty(STDIN_FILENO);
+	int line_number = 0;
+	int builtin_result;
 
 	(void)argc;
+	(void)argv;
 
 	while (1)
 	{
-		display_prompt();
-		input = read_input();
-		status = execute_command(input, envp, prog_name, ++line_number, status);
-		free(input);
-		if (!interactive && status == 127)
-			exit(127);
+		if (interactive)
+			display_prompt();
+
+		line = read_input();
+		if (!line)
+			break;
+
+		tokens = split_line(line);
+		free(line);
+
+		if (!tokens || !tokens[0])
+		{
+			free_argv(tokens);
+			continue;
+		}
+		builtin_result = handle_builtins(tokens, envp);
+
+		if (builtin_result == -1)
+		{
+			free_argv(tokens);
+			exit(status);
+		}
+
+		if (builtin_result == 1)
+		{
+			free_argv(tokens);
+			continue;
+		}
+		status = execute_command(tokens, envp, argv[0], ++line_number);
+		free_argv(tokens);
 	}
+
 	return (status);
 }
+

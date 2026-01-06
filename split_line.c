@@ -28,30 +28,38 @@ void free_argv(char **argv)
  */
 char **split_line(char *line)
 {
-	char **argv;
+	char **tokens = NULL;
 	char *token;
-	int i = 0;
-
-	/* Count the number of arguments */
-	int argc = count_arguments(line);
-
-	/* Allocate memory for argv with the exact number of arguments "argc"*/
-	argv = malloc(sizeof(char *) * (argc + 1));
-	if (argv == NULL)
-		return (NULL);
+	int count = 0;
 
 	token = strtok(line, " \t\n");
 	while (token)
 	{
-		if (strlen(token) > 0)
-		{
-			argv[i] = strdup(token);
-			i++;
-		}
+		count++;
 		token = strtok(NULL, " \t\n");
 	}
-	argv[i] = NULL;
 
-	return (argv);
+	if (count == 0)
+		return (NULL);
+
+	tokens = malloc(sizeof(char *) * (count + 1));
+	if (!tokens)
+		return (NULL);
+
+	count = 0;
+	token = strtok(line, " \t\n");
+	while (token)
+	{
+		tokens[count] = strdup(token);
+		if (!tokens[count])
+		{
+			free_argv(tokens);
+			return (NULL);
+		}
+		count++;
+		token = strtok(NULL, " \t\n");
+	}
+	tokens[count] = NULL;
+	return (tokens);
 }
 
