@@ -13,9 +13,8 @@ void display_prompt(void)
 }
 
 /**
- * read_input - Lire une ligne depuis l'entrée standard
- *
- * Return: La ligne lue
+ * read_input - Read a line from standard input
+ * Return: The read line, or NULL on failure
  */
 char *read_input(void)
 {
@@ -43,7 +42,6 @@ int main(int argc, char **argv, char **envp)
 	char *line;
 	char **tokens;
 	int status = 0;
-	int interactive = isatty(STDIN_FILENO);
 	int line_number = 0;
 	int builtin_result;
 	(void)argc;
@@ -51,7 +49,7 @@ int main(int argc, char **argv, char **envp)
 
 	while (1)
 	{
-		if (interactive)
+		if (isatty(STDIN_FILENO) == 1)
 			display_prompt();
 		line = read_input();
 		if (!line)

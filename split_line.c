@@ -28,7 +28,7 @@ char **split_line(char *line)
 {
 	char **tokens;
 	char *token;
-	int count = 0, i = 0;
+	int count = 0;
 	char *line_copy;
 
 	if (!line)
@@ -51,19 +51,19 @@ char **split_line(char *line)
 	tokens = malloc(sizeof(char *) * (count + 1));
 	if (!tokens)
 		return (NULL);
-	i = 0;
+	count = 0;
 	token = strtok(line, " \t\n");
 	while (token)
 	{
-		tokens[i] = strdup(token);
-		if (!tokens[i])
+		tokens[count] = strdup(token);
+		if (!tokens[count])
 		{
 			free_argv(tokens);
 			return (NULL);
 		}
-		i++;
+		count++;
 		token = strtok(NULL, " \t\n");
 	}
-	tokens[i] = NULL;
+	tokens[count] = NULL;
 	return (tokens);
 }
