@@ -1,0 +1,54 @@
+.TH SIMPLE_SHELL 1 "December 2025" "version 1.0" "Simple Shell Manual"
+
+.SH NAME
+simple_shell \- a minimal UNIX command line interpreter
+
+.SH SYNOPSIS
+.B ./hsh
+.br
+.B echo "command" | ./hsh
+
+.SH DESCRIPTION
+\fBSimple Shell\fP is a basic UNIX command interpreter written in C.
+.br
+It displays a prompt, reads user input, parses commands, and executes programs using system calls.
+.br
+The shell supports both interactive and non-interactive modes. 
+.br
+In interactive mode, the shell waits for user input and executes commands line by line.
+.br 
+In non-interactive mode, commands are read from standard input.
+.br
+Command execution relies on process creation using \fBfork\fP, program replacement using \fBexecve\fP,
+and synchronization with child processes using \fBwait\fP.
+.br
+The shell searches for executable files using the \fBPATH\fP environment variable when a command
+is not provided with an absolute or relative path.
+.br
+Built-in commands implemented include:
+.br
+- \fBexit\fP : exits the shell
+.br
+- \fBenv\fP : displays the current environment
+.br
+If a command is not found or cannot be executed, an error message is printed to standard error.
+
+.SH RETURN VALUE
+The shell returns \fB0\fP on normal termination.
+.br
+If an error occurs during execution, a non-zero value may be returned depending on the failure.
+
+.SH EXAMPLES
+Start the shell in interactive mode: ./hsh
+.br
+Execute a command in non-interactive mode: echo "ls -l" | ./hsh
+
+.SH DATE
+December 2025
+
+.SH AUTHORS
+Written by:
+.br
+- Mario Colomas
+.br
+- Lucas Nevano
