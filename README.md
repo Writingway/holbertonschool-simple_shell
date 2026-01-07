@@ -203,8 +203,7 @@ The overall functioning of the shell follows the following steps:
 7. Waiting for the child process (`wait`)
 8. Prompt return
 
-https://mermaid.live/edit<img width="4520" height="11631" alt="image" src="https://github.com/user-attachments/assets/84e36180-1aa4-4f87-bd1d-eb80edff9bf0" />
-
+![Simple Shell Flowchart](https://github.com/user-attachments/assets/84e36180-1aa4-4f87-bd1d-eb80edff9bf0)
 
 ---
 
