@@ -13,7 +13,7 @@ int handle_builtins(char **argv, char **env)
 
 	if (strcmp(argv[0], "exit") == 0)
 	{
-		return (-1); /* signal to exit */
+		return (-1); /* Indicate that a built-in was executed */
 	}
 
 	if (strcmp(argv[0], "env") == 0)
@@ -22,10 +22,10 @@ int handle_builtins(char **argv, char **env)
 
 		while (env[i])
 			printf("%s\n", env[i++]);
-		return (1);
+		return (1); /* Indicate that a built-in was executed */
 	}
 
-	return (0); /* pas un builtin */
+	return (0);
 }
 
 /**
@@ -45,9 +45,9 @@ int execute_command(char **argv, char **env, char *prog_name, int line_number)
 	if (!argv || !argv[0])
 		return (0);
 
-	if (strchr(argv[0], '/')) /* chemin absolu ou relatif */
+	if (strchr(argv[0], '/')) /* absolute or relative path */
 		cmd_path = argv[0];
-	else /* chercher dans PATH */
+	else /* research into PATH */
 	{
 		cmd_path = find_path(argv[0], env);
 		if (!cmd_path)
@@ -58,14 +58,17 @@ int execute_command(char **argv, char **env, char *prog_name, int line_number)
 	}
 	pid = fork();
 	if (pid == 0) /* child */
+	{
 		execve(cmd_path, argv, env), perror("execve"), exit(127);
+	}
 	else if (pid < 0)
 		return (perror("fork"), 1);
 	waitpid(pid, &status, 0);
 
+	/* Extract the exit status from the status returned by waitpid */
 	status = status >> 8;
 
-	if (!strchr(argv[0], '/')) /* free seulement si find_path a malloc */
+	if (!strchr(argv[0], '/')) /* free only if find_path malloced */
 		free(cmd_path);
 	return (status);
 }
