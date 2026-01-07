@@ -5,13 +5,14 @@
 ## Summary
 
 - [Description](#Description)
-- [Compilation](#Compilation_command)
-- [Built-in-Commands](#Built-in-Commands)
+- [Allowed_Functions](#Allowed_Functions)
 - [Compilation_command](#Compilation_command)
 - [Requirements](#Requirements)
 - [Examples_of_use](#Examples_of_use)
 - [Man_Page](#Man_Page)
-- [Testing](#Testing)
+- [Features](#Features)
+- [Built-in-Commands](#Built-in-Commands)
+- [Memory_Management](#Memory_Management)
 - [Flowchart](#Flowchart)
 - [Other](#Other)
 - [Technologies_Used](#Technologies_Used)
@@ -29,15 +30,51 @@ Usage The shell works in two modes: Interactive and Non-Interactive.
 
 ---
 
-## Built-in-Commands
+## Allowed_Functions
 
-The shell supports the following built-in commands that are executed directly by the shell process:
+* Style: Code must follow the Betty style guide.
+* File Structure: The project is modularized to comply with the limit of 5 functions per file.
 
-| Command | Description |
-| --- | --- |
-| **exit** | Exit the shell |
-| **env** | Print the current environment |
+* List of allowed functions:
 
+ * all functions from string.h
+ * access (man 2 access)
+ * chdir (man 2 chdir)
+ * close (man 2 close)
+ * closedir (man 3 closedir)
+ * execve (man 2 execve)
+ * exit (man 3 exit)
+ * _exit (man 2 _exit)
+ * fflush (man 3 fflush)
+ * fork (man 2 fork)
+ * free (man 3 free)
+ * getcwd (man 3 getcwd)
+ * getline (man 3 getline)
+ * getpid (man 2 getpid)
+ * isatty (man 3 isatty)
+ * kill (man 2 kill)
+ * malloc (man 3 malloc)
+ * open (man 2 open)
+ * opendir (man 3 opendir)
+ * perror (man 3 perror)
+ * printf (man 3 printf)
+ * fprintf (man 3 fprintf)
+ * vfprintf (man 3 vfprintf)
+ * sprintf (man 3 sprintf)
+ * putchar (man 3 putchar)
+ * read (man 2 read)
+ * readdir (man 3 readdir)
+ * signal (man 2 signal)
+ * stat (__xstat) (man 2 stat)
+ * lstat (__lxstat) (man 2 lstat)
+ * fstat (__fxstat) (man 2 fstat)
+ * strtok (man 3 strtok)
+ * wait (man 2 wait)
+ * waitpid (man 2 waitpid)
+ * wait3 (man 2 wait3)
+ * wait4 (man 2 wait4)
+ * write (man 2 write)
+ 
 ---
 
 ## Compilation_command
@@ -106,15 +143,25 @@ If necessary, add execution rights to the file.
 
 ---
 
-## Testing
+## Features
 
-### Tests manuels
+* Execution of simple commands : `ls`, `pwd`, `env`.
+* Commands with arguments : `ls -l`, `echo hello`.
+* Invalid commands not found.
+* Handle `Ctrl+D` (EOF) and `Ctrl+C` (SIGINT).
+* Non-interactive mode via pipe.
+* Built-ins: `exit`, `env`.
 
-* Execution of simple commands : `ls`, `pwd`, `env`
-* Commands with arguments : `ls -l`, `echo hello`
-* Invalid orders
-* Manage of `EOF` (Ctrl + D)
-* Non-interactive mode via pipe
+---
+
+## Built-in-Commands
+
+The shell supports the following built-in commands that are executed directly by the shell process:
+
+| Command | Description |
+| --- | --- |
+| **exit** | Exit the shell |
+| **env** | Print the current environment |
 
 ---
 
@@ -170,6 +217,7 @@ The overall functioning of the shell follows the following steps:
 ---
 
 ## Technologies_Used
+
 <div align="left">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" height="40" alt="c logo"  />
   <img width="12" />
