@@ -203,60 +203,7 @@ The overall functioning of the shell follows the following steps:
 7. Waiting for the child process (`wait`)
 8. Prompt return
 
-graph TD
-    Start([START Main])
-    
-    Start --> Init[/Initialization variables/]
-    
-    Init --> Loop{Main loop}
-    
-    Loop --> CheckTTY{isatty<br/>STDIN_FILENO?}
-    
-    CheckTTY -->|Yes| Prompt[Display prompt '$']
-    CheckTTY -->|No| ReadInput
-    
-    Prompt --> ReadInput
-    
-    ReadInput[read_input<br/>Read the line with getline]
-    
-    ReadInput --> CheckEOF{line<br/>== NULL?}
-    
-    CheckEOF -->|Yes - EOF| Break[break<br/>End of loop]
-    Break --> End
-    
-    CheckEOF -->|No| Split[split_line<br/>Tokenize the line]
-    
-    Split --> FreeLine[free line]
-    
-    FreeLine --> CheckEmpty{Empty token?}
-    
-    CheckEmpty -->|Yes| FreeTokens1[free_argv tokens]
-    FreeTokens1 --> Continue1[continue]
-    Continue1 --> Loop
-    
-    CheckEmpty -->|No| Builtins[handle_builtins<br/>tokens, envp]
-    
-    Builtins --> CheckExit{builtin_result<br/>== -1?}
-    
-    CheckExit -->|Yes - exit| FreeExit[free_argv tokens]
-    FreeExit --> ExitShell[exit status]
-    ExitShell --> End
-    
-    CheckExit -->|No| CheckEnv{builtin_result<br/>== 1?}
-    
-    CheckEnv -->|Yes - env| FreeEnv[free_argv tokens]
-    FreeEnv --> Continue2[continue]
-    Continue2 --> Loop
-    
-    CheckEnv -->|No| Execute[execute_command<br/>tokens, envp, argv 0,<br/>++line_number]
-    
-    Execute --> SaveStatus[Save status]
-    
-    SaveStatus --> FreeTokens2[free_argv tokens]
-    
-    FreeTokens2 --> Loop
-    
-    End([END<br/>return 0])
+https://mermaid.live/edit<img width="4520" height="11631" alt="image" src="https://github.com/user-attachments/assets/84e36180-1aa4-4f87-bd1d-eb80edff9bf0" />
 
 
 ---
