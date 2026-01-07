@@ -203,7 +203,8 @@ The overall functioning of the shell follows the following steps:
 7. Waiting for the child process (`wait`)
 8. Prompt return
 
-(Un flowchart visuel peut être ajouté dans le dossier `assets/`.)
+<img width="4520" height="11631" alt="image" src="https://github.com/user-attachments/assets/20f44f2a-5fac-45ec-9344-881ed7446ca7" />
+
 
 ---
 
