@@ -7,10 +7,26 @@
  */
 void display_prompt(void)
 {
-	/* titre de la fenêtre */
 	printf("$ ");
-	/* s'assurer que ça s'affiche immédiatement */
+	/* apply flush to ensure prompt is displayed immediately */
 	fflush(stdout);
+}
+
+/**
+ * read_input - Read a line from standard input
+ * Return: The read line, or NULL on failure
+ */
+char *read_input(void)
+{
+	char *line = NULL;
+	size_t len = 0;
+
+	if (getline(&line, &len, stdin) == -1)
+	{
+		free(line);
+		return (NULL);
+	}
+	return (line);
 }
 
 /**
@@ -26,7 +42,6 @@ int main(int argc, char **argv, char **envp)
 	char *line;
 	char **tokens;
 	int status = 0;
-	int interactive = isatty(STDIN_FILENO);
 	int line_number = 0;
 	int builtin_result;
 	(void)argc;
@@ -34,7 +49,7 @@ int main(int argc, char **argv, char **envp)
 
 	while (1)
 	{
-		if (interactive)
+		if (isatty(STDIN_FILENO) == 1)
 			display_prompt();
 		line = read_input();
 		if (!line)
